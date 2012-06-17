@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>three.js canvas - geometry - cube</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+			body {
+				background-color: #f0f0f0;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript" src="three.js"></script>
+		<script type="text/javascript">
+ 
+		var camera, scene, renderer,
+	    geometry, material, mesh;
+
+	    init();
+	    animate();
+
+	    function init() {
+
+	        scene = new THREE.Scene();
+
+	        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+	        camera.position.z = 1000;
+	        scene.add( camera );
+
+	        geometry = new THREE.SphereGeometry( 50, 8, 8 );
+	        material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+
+	        centerNode = new THREE.Object3D();
+	        scene.add( centerNode );
+	        
+	        for (i = 0; i < 15; i++) {
+	        	mesh = new THREE.Mesh( geometry, material );        	        	
+	        	mesh.matrix.rotateZ( -i * (6.28/15) );
+	        	mesh.matrix.translate( new THREE.Vector3( 0, 300, 0 ) );
+	        	mesh.matrixAutoUpdate = false;
+	        	centerNode.add( mesh );
+	        }
+
+	        renderer = new THREE.CanvasRenderer();
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+
+	        document.body.appendChild( renderer.domElement );
+
+	    }
+
+	    function animate() {
+
+	        // note: three.js includes requestAnimationFrame shim
+	        requestAnimationFrame( animate );
+	        render();
+
+	    }
+
+	    function render() {
+	    	// centerNode.position.x = -200;
+	        centerNode.rotation.z += 0.02;
+	        centerNode.rotation.x = -0.5;
+
+	        renderer.render( scene, camera );
+
+	    }
+
+		</script>
+
+	</body>
+</html>
